@@ -64,9 +64,10 @@ var userSchema = new mongoose.Schema({
 });
 var User = mongoose.model('User', userSchema);
 
-app.use(express.static(__dirname + '/public'))
-   .use(cors())
-   .use(cookieParser());
+// app.use(express.static(__dirname + '/public'))
+//    .use(cors())
+//    .use(cookieParser());
+app.use(cors())
 
 app.get('/login', function(req, res) {
 
