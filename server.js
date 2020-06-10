@@ -110,9 +110,5 @@ function encrypt(text) {
     return bytes.toString(CryptoJS.enc.Utf8);
   };
    
-  // Start the server
-  var server = http.createServer(app);
-   
-  server.listen(process.env.PORT || 5000, function (err) {
-    console.info('listening in http://localhost:8080');
-  });
+console.log('Listening on 5000');
+app.listen(5000);
