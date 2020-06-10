@@ -11,7 +11,7 @@ var app = express();
 const CLIENT_ID = 'bdf1ef6a64c0498a87a9ed6d9040845a';
 const CLIENT_SECRET = 'aa4e3ca4f54f410fb4a131448cefade3';
 const ENCRYPTION_SECRET = 'mysecret';
-const redirect_uri = 'http://18.181.189.89:3000/callback'
+const redirect_uri = 'http://18.181.189.89:8888/callback'
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -88,5 +88,5 @@ app.get('/callback', function(req, res) {
 console.log(req.body);
 res.send(req.body)
 })
-const port = 3000
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
+const port = 8888
+app.listen(port, () => console.log(`Example app listening at http://81.181.189.89:${port}`))
