@@ -12,6 +12,34 @@ const CLIENT_ID = 'bdf1ef6a64c0498a87a9ed6d9040845a';
 const CLIENT_SECRET = 'aa4e3ca4f54f410fb4a131448cefade3';
 const ENCRYPTION_SECRET = 'mysecret';
 const redirect_uri = 'http://localhost:8888/callback'
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://admin:admin@cluster0-nwyig.mongodb.net/gunsnroses?retryWrites=true&w=majority', {useNewUrlParser: true});
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('Connected to MongoDB Cloud successfully!')
+});
+var userSchema = new mongoose.Schema({
+  display_name: String,
+  email: String,
+  profile_image: String,
+  country: String,
+  access_token: String, 
+  refresh_token: String,
+  authorization_code: String,
+  explicit_content: { filter_enabled: Boolean,filter_locked: Boolean },
+  external_urls: { spotify: String},
+  followers: { href: String, total: Number},
+  href: String,
+  id: String,
+  images : Array,
+  product: String,
+  type: String,
+  uri: String
+});
+var User = mongoose.model('User', userSchema);
+
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -83,9 +111,13 @@ app.post('/refresh', (req, res) => {
       }
     });
 })
-app.get('/token',(req,res) => {
-  res.send({"access_token":"sample data"});
-})
+app.get('/token', function(req, res) {
+  User.findOne({ 'id': req.query.id }, function (err, user) {
+    res.send({
+      'access_token': user.access_token
+    });
+  });
+});
 
 app.get('/callback', function(req, res) {
 console.log(req.body);
